@@ -24,10 +24,12 @@ class AnimalController extends Controller
      */
     public function create()
     {
-        $clients = Client::all();
-        return view('animals.create', [
-            'clients' => Animal::with('user')->latest()->get(),
-        ]);
+        //
+    }
+
+    public function create_from_client(Client $client)
+    {
+        return view('animals.create', compact('client'));
     }
 
     /**
@@ -38,20 +40,20 @@ class AnimalController extends Controller
         $validated = $request->validate([
         'name' => 'required|string|max:255',
         'type' => 'required|string',
+        'sex' => 'required|in:Male,Female',
+        'dob' => 'required|date',
         'breed' => 'nullable|string|max:255',
-        'age' => 'required|integer|min:0',
-        'gender' => 'nullable|in:Male,Female',
-        'color' => 'nullable|string|max:255',
-        'owner_id' => 'required|exists:owners,id',
-        'dob' => 'nullable|date',
-        'medical_conditions' => 'nullable|string',
-        'vaccination_status' => 'nullable|string',
-        'notes' => 'nullable|string',
+        'breed_sec' => 'nullable|string|max:255',
+        'layer' => 'nullable|string|max:255',
+        'purpose' => 'nullable|string|max:255',
+        'client_id' => 'required|exists:clients,id',
+        'user_id' => 'required|exists:users,id',
+        'microchipno' => 'required|string|max:255',
         ]);
 
         Animal::create($validated);
 
-        return redirect()->route('animals.index')->with('success', 'Animal created successfully.');
+        return redirect()->route('clients.index')->with('success', 'Animal creado correctamente.');
     }
 
     /**
@@ -83,6 +85,8 @@ class AnimalController extends Controller
      */
     public function destroy(Animal $animal)
     {
-        //
+        $animal->delete();
+
+        return redirect()->route('clients.index')->with('success', 'Animal deleted successfully!');
     }
 }

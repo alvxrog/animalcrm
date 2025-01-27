@@ -11,14 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('animals', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('client_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+        Schema::table('clients', function (Blueprint $table) {
             $table->string('name');
-            $table->string('type');
-            $table->string('breed');
-            $table->timestamps();
+            $table->string('email')->nullable();
         });
     }
 
@@ -27,6 +22,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('animals');
+        Schema::table('clients', function (Blueprint $table) {
+            //
+        });
     }
 };

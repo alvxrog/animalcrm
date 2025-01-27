@@ -1,0 +1,97 @@
+/* Estilo general para las páginas */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f9fafb;
+    color: #374151;
+    margin: 0;
+    padding: 20px;
+}
+
+/* Encabezados */
+h1 {
+    font-size: 1.75rem;
+    color: #1f2937;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #e5e7eb;
+    padding-bottom: 0.5rem;
+}
+
+/* Parrafos */
+p {
+    font-size: 1rem;
+    margin: 0.5rem 0;
+}
+
+p strong {
+    color: #1f2937;
+    font-weight: 600;
+}
+
+/* Formularios */
+form {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 20px 0;
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="number"],
+form input[type="address"],
+form input[type="tel"],
+form input[type="date"],
+form select,
+form textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: #374151;
+    background-color: #f9fafb;
+}
+
+form input:focus,
+form select:focus,
+form textarea:focus {
+    border-color: #3b82f6;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+/* Botones */
+form button[type="submit"] {
+    display: inline-block;
+    background-color: #3b82f6;
+    color: #ffffff;
+    font-weight: 600;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+form button[type="submit"]:hover {
+    background-color: #2563eb;
+}
+
+form button[type="submit"]:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+/* Elementos ocultos */
+form input[type="hidden"] {
+    display: none;
+}
+
+/* Separador entre secciones */
+.section-divider {
+    margin: 20px 0;
+    border-top: 1px solid #d1d5db;
+}

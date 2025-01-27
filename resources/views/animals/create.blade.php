@@ -1,125 +1,126 @@
 <x-app-layout>
-    <div class="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
-    <!-- Display Validation Errors -->
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <strong>Whoops!</strong> There were some problems with your input.<br><br>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+    <link rel="stylesheet" href="{{ asset('css/forms.css') }}">
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Nuevo animal') }}
+        </h2>
+    </x-slot>
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900">
+                <h1>Detalles del cliente</h1>
+                <p><strong>Nombre:</strong> {{ $client->name }}</p>
+                <p><strong>Nº identificacion (DNI/NIE):</strong> {{ $client->identifno }}</p>
+                <p><strong>Correo electrónico:</strong> {{ $client->email }}</p>
 
-    <!-- Form Start -->
-    <form action="{{ route('animals.store')}}" method="POST">
-        @csrf
-        @if(isset($animal))
-            @method('PUT')
-        @endif
+                <!-- Display Validation Errors -->
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <strong>Whoops!</strong> There were some problems with your input.<br><br>
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
 
-        <!-- Name -->
-        <div class="form-group">
-            <label for="name">Name<span class="text-danger">*</span>:</label>
-            <input type="text" name="name" id="name" class="form-control" 
-                   value="{{ old('name', isset($animal) ? $animal->name : '') }}" required>
-        </div>
+                <h1>Detalles del animal</h1>
+                <!-- Form Start -->
+                <form action="{{ route('animals.store')}}" method="POST">
+                    @csrf
+                    @if(isset($animal))
+                        @method('PUT')
+                    @endif
 
-        <!-- Type of Animal -->
-        <div class="form-group">
-            <label for="type">Type of Animal<span class="text-danger">*</span>:</label>
-            <select name="type" id="type" class="form-control" required>
-                <option value="">-- Select Type --</option>
-                <option value="Dog" {{ old('type', isset($animal) ? $animal->type : '') == 'Dog' ? 'selected' : '' }}>Dog</option>
-                <option value="Cat" {{ old('type', isset($animal) ? $animal->type : '') == 'Cat' ? 'selected' : '' }}>Cat</option>
-                <option value="Bird" {{ old('type', isset($animal) ? $animal->type : '') == 'Bird' ? 'selected' : '' }}>Bird</option>
-                <option value="Reptile" {{ old('type', isset($animal) ? $animal->type : '') == 'Reptile' ? 'selected' : '' }}>Reptile</option>
-                <option value="Other" {{ old('type', isset($animal) ? $animal->type : '') == 'Other' ? 'selected' : '' }}>Other</option>
-            </select>
-        </div>
+                    <!-- ClientID -->
+                    <input type="hidden" name="client_id" value="{{ $client->id }}">
 
-        <!-- Breed -->
-        <div class="form-group">
-            <label for="breed">Breed:</label>
-            <input type="text" name="breed" id="breed" class="form-control" 
-                   value="{{ old('breed', isset($animal) ? $animal->breed : '') }}">
-        </div>
+                    <!-- UserID -->
+                    <input type="hidden" name="user_id" value="{{ $client->user->id }}">
 
-        <!-- Age -->
-        <div class="form-group">
-            <label for="age">Age<span class="text-danger">*</span>:</label>
-            <input type="number" name="age" id="age" class="form-control" min="0" 
-                   value="{{ old('age', isset($animal) ? $animal->age : '') }}" required>
-        </div>
+                    <!-- Name -->
+                    <div class="form-group">
+                        <label for="name">Nombre<span class="text-danger">*</span>:</label>
+                        <input type="text" name="name" id="name" class="form-control" 
+                            value="{{ old('name', isset($animal) ? $animal->name : '') }}" required>
+                    </div>
 
-        <!-- Gender -->
-        <div class="form-group">
-            <label>Gender:</label><br>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="gender" id="gender_male" value="Male" 
-                       {{ old('gender', isset($animal) ? $animal->gender : '') == 'Male' ? 'checked' : '' }}>
-                <label class="form-check-label" for="gender_male">Male</label>
+                    <!-- Microchip no-->
+                    <div class="form-group">
+                        <label for="microchipno">Nº de microchip<span class="text-danger">*</span>:</label>
+                        <input type="text" name="microchipno" id="microchipno" class="form-control" 
+                            value="{{ old('microchipno', isset($animal) ? $animal->microchipno : '') }}" required>
+                    </div>
+
+                    <!-- Species -->
+                    <div class="form-group">
+                        <label for="type">Especie<span class="text-danger">*</span>:</label>
+                        <select name="type" id="type" class="form-control" required>
+                            <option value="">Selecciona una opción</option>
+                            <option value="Dog" {{ old('type', isset($animal) ? $animal->type : '') == 'Dog' ? 'selected' : '' }}>Perro</option>
+                            <option value="Cat" {{ old('type', isset($animal) ? $animal->type : '') == 'Cat' ? 'selected' : '' }}>Gato</option>
+                            <option value="Bird" {{ old('type', isset($animal) ? $animal->type : '') == 'Bird' ? 'selected' : '' }}>Ave</option>
+                            <option value="Reptile" {{ old('type', isset($animal) ? $animal->type : '') == 'Reptile' ? 'selected' : '' }}>Reptil</option>
+                            <option value="Other" {{ old('type', isset($animal) ? $animal->type : '') == 'Other' ? 'selected' : '' }}>Otro</option>
+                        </select>
+                    </div>
+
+                    <!-- Sex -->
+                    <div class="form-group">
+                        <label>Sexo:</label><br>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="sex" id="gender_male" value="Male" 
+                                {{ old('sex', isset($animal) ? $animal->sex : '') == 'Male' ? 'checked' : '' }}>
+                            <label class="form-check-label" for="sex_male">Macho</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="sex" id="gender_female" value="Female" 
+                                {{ old('sex', isset($animal) ? $animal->sex : '') == 'Female' ? 'checked' : '' }}>
+                            <label class="form-check-label" for="sex_female">Hembra</label>
+                        </div>
+                    </div>
+
+                    <!-- Date of Birth -->
+                    <div class="form-group">
+                        <label for="dob">Fecha de nacimiento:</label>
+                        <input type="date" name="dob" id="dob" class="form-control" 
+                            value="{{ old('dob', isset($animal) ? $animal->dob->format('d-m-Y') : '') }}">
+                    </div>
+
+                    <!-- Breed -->
+                    <div class="form-group">
+                        <label for="breed">Raza*:</label>
+                        <input type="text" name="breed" id="breed" class="form-control" 
+                            value="{{ old('breed', isset($animal) ? $animal->breed : '') }}">
+                    </div>
+
+                    <!-- Breed sec -->
+                    <div class="form-group">
+                        <label for="breed_sec">Raza (segunda):</label>
+                        <input type="text" name="breed_sec" id="breed_Sec" class="form-control" 
+                            value="{{ old('breed_sec', isset($animal) ? $animal->breed_sec : '') }}">
+                    </div>
+
+                    <!-- Layer -->
+                    <div class="form-group">
+                        <label for="layer">Capa:</label>
+                        <input type="text" name="layer" id="layer" class="form-control" 
+                            value="{{ old('layer', isset($animal) ? $animal->layer : '') }}">
+                    </div>
+
+                    <!-- Purpose -->
+                    <div class="form-group">
+                        <label for="purpose">Propósito*:</label>
+                        <input type="text" name="purpose" id="purpose" class="form-control" 
+                            value="{{ old('purpose', isset($animal) ? $animal->purpose : '') }}">
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-primary">{{ isset($animal) ? 'Actualizar animal' : 'Crear animal' }}</button>        <form method="POST" action="{{ route('animals.store') }}">
+                </div>
             </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="gender" id="gender_female" value="Female" 
-                       {{ old('gender', isset($animal) ? $animal->gender : '') == 'Female' ? 'checked' : '' }}>
-                <label class="form-check-label" for="gender_female">Female</label>
-            </div>
         </div>
-
-        <!-- Color -->
-        <div class="form-group">
-            <label for="color">Color:</label>
-            <input type="text" name="color" id="color" class="form-control" 
-                   value="{{ old('color', isset($animal) ? $animal->color : '') }}">
-        </div>
-
-        <!-- Owner -->
-        <div class="form-group">
-            <label for="owner_id">Owner<span class="text-danger">*</span>:</label>
-            <select name="owner_id" id="owner_id" class="form-control" required>
-                <option value="">-- Select Owner --</option>
-                @foreach($clients as $client)
-                    <option value="{{ $client->id }}" 
-                        {{ old('client_id', isset($animal) ? $animal->client_id : '') == $client->id ? 'selected' : '' }}>
-                        {{ $client->name }}
-                    </option>
-                @endforeach
-            </select>
-        </div>
-
-        <!-- Date of Birth -->
-        <div class="form-group">
-            <label for="dob">Date of Birth:</label>
-            <input type="date" name="dob" id="dob" class="form-control" 
-                   value="{{ old('dob', isset($animal) ? $animal->dob->format('Y-m-d') : '') }}">
-        </div>
-
-        <!-- Medical Conditions -->
-        <div class="form-group">
-            <label for="medical_conditions">Medical Conditions:</label>
-            <textarea name="medical_conditions" id="medical_conditions" class="form-control" rows="3">{{ old('medical_conditions', isset($animal) ? $animal->medical_conditions : '') }}</textarea>
-        </div>
-
-        <!-- Vaccination Status -->
-        <div class="form-group">
-            <label for="vaccination_status">Vaccination Status:</label>
-            <select name="vaccination_status" id="vaccination_status" class="form-control">
-                <option value="">-- Select Status --</option>
-                <option value="Up to date" {{ old('vaccination_status', isset($animal) ? $animal->vaccination_status : '') == 'Up to date' ? 'selected' : '' }}>Up to date</option>
-                <option value="Pending" {{ old('vaccination_status', isset($animal) ? $animal->vaccination_status : '') == 'Pending' ? 'selected' : '' }}>Pending</option>
-                <option value="Not Vaccinated" {{ old('vaccination_status', isset($animal) ? $animal->vaccination_status : '') == 'Not Vaccinated' ? 'selected' : '' }}>Not Vaccinated</option>
-            </select>
-        </div>
-
-        <!-- Additional Notes -->
-        <div class="form-group">
-            <label for="notes">Additional Notes:</label>
-            <textarea name="notes" id="notes" class="form-control" rows="3">{{ old('notes', isset($animal) ? $animal->notes : '') }}</textarea>
-        </div>
-
-        <!-- Submit Button -->
-        <button type="submit" class="btn btn-primary">{{ isset($animal) ? 'Update' : 'Submit' }}</button>        <form method="POST" action="{{ route('animals.store') }}">
     </div>
 </x-app-layout>

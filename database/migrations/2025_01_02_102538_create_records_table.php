@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('animals', function (Blueprint $table) {
+        Schema::create('records', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('client_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->string('name');
-            $table->string('type');
-            $table->string('breed');
+            $table->foreignId('client_id')->constrained()->onDelete('cascade');
+            $table->foreignId('animal_id')->constrained()->onDelete('cascade');
+            $table->text('description'); // Información de la receta
+            $table->date('date');        // Fecha de la receta
             $table->timestamps();
         });
     }
@@ -27,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('animals');
+        Schema::dropIfExists('records');
     }
 };
