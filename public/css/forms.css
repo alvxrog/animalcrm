@@ -76,6 +76,30 @@ form button[type="submit"] {
     transition: background-color 0.3s ease;
 }
 
+form button[type="normal"] {
+    display: inline-block;
+    background-color: #3b82f6;
+    color: #ffffff;
+    font-weight: 600;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+form button[type="remove"] {
+    display: inline-block;
+    background-color: #f63b3b;
+    color: #ffffff;
+    font-weight: 600;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
 form button[type="submit"]:hover {
     background-color: #2563eb;
 }

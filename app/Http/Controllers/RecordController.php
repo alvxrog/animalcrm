@@ -34,28 +34,58 @@ class RecordController extends Controller
         $validated = $request->validate([
             'client_id' => 'required|exists:clients,id',
             'animal_id' => 'required|exists:animals,id',
-            'description' => 'required|string',
-            'date' => 'required|date',
-            'symptoms'=> 'required|string',
-            'history'=> 'required|string',
-            'medicine_history'=> 'required|string',
-            'nourishmentm'=> 'required|string',
-            'exam'=> 'required|string',
-            'dps'=> 'required|string',
-            'active_ingr'=> 'required|string',
-            'quantity'=> 'required|string',
-            'dose_freq'=> 'required|string',
-            'admin_chann'=> 'required|string',
-            'treat_duration'=> 'required|string',
+            'description' => 'nullable|string',
+            'date' => 'nullable|date',
+            'symptoms'=> 'nullable|string',
+            'history'=> 'nullable|string',
+            'medicine_history'=> 'nullable|string',
+            'nourishmentm'=> 'nullable|string',
+            'exam'=> 'nullable|string',
+            'dps'=> 'nullable|string',
+            'active_ingr'=> 'nullable|string',
+            'quantity'=> 'nullable|string',
+            'dose_freq'=> 'nullable|string',
+            'admin_chann'=> 'nullable|string',
+            'treat_duration'=> 'nullable|string',
             'prescr_type'=> 'required|string|in:ordinary,exceptional',
-            'indications'=> 'required|string',
+            'indications'=> 'nullable|string',
             'treatment'=> 'required|string|in:therapeutic,profilactic,metafilactic',
-            'warnings'=> 'required|string',
+            'warnings'=> 'nullable|string',
+            'recipeno' => 'required|array',
+            'recipeno.*' => 'nullable|string|max:255',
+            'provisionType' => 'required|array',
+            'provisionType.*' => 'nullable|string|max:255',
+            'file_url.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:4096', // Máximo 4MB
         ]);
 
-        Record::create($validated);
+        $recipeFields = ['recipeno', 'provisionType', 'file_url']; // Definir los nombres de los campos de Recipe
 
-        return redirect()->route('records.index')->with('success', 'Record created successfully!');
+        // Extraer los datos de Recipe (los 4 últimos campos validados)
+        $recipeData = array_intersect_key($validated, array_flip($recipeFields));
+
+        // Extraer los datos de Record (resto de campos)
+        $recordData = array_diff_key($validated, $recipeData);
+
+        // Crear el Record
+        $record = Record::create($recordData);
+        
+        // Crear recetas para el record
+        foreach ($recipeData['recipeno'] as $index => $recipeno) {
+            $fileUrl = null;
+
+            if ($request->hasFile("file_url.$index")) {
+                $file = $request->file("file_url.$index");
+                $fileUrl = $file->store('recipes', 'public'); // Almacenar en storage/app/public/recipes
+            }
+
+            $record->recipes()->create([
+                'recipeno' => $recipeno,
+                'provisionType' => $recipeData['provisionType'][$index],
+                'file_url' => $fileUrl,
+            ]);
+        }
+
+        return redirect()->route('records.index')->with('success', 'Acto clínico generado correctamente');
     }
 
     public function show(Record $record)

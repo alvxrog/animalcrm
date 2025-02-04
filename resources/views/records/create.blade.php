@@ -20,17 +20,25 @@
                     <p><strong>Fecha de nacimiento:</strong> {{ $animal->dob->format('d-m-Y')}}</p>
                     <p><strong>Raza:</strong> {{ $animal->breed }}</p>
 
+                    @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <strong>Cuidado</strong> Ha habido algunos problemas al crear el elemento.<br><br>
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
+
                     <h1>Acto clínico:</h1>
-                    <form action="{{ route('records.store') }}" method="POST">
+                    <form action="{{ route('records.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <!-- ClientID -->
                         <input type="hidden" name="client_id" value="{{ $animal->client->id }}">
 
                         <!-- AnimalID -->
                         <input type="hidden" name="animal_id" value="{{ $animal->id }}">
-
-                        <!-- Default description -->
-                        <input type="hidden" name="description" value="{{ "Default description" }}">
 
                         <div class="mb-3">
                             <label for="date" class="form-label">Fecha</label>
@@ -123,9 +131,51 @@
                             <label for="warnings" class="form-label">Advertencias e indicaciones para el propietario</label>
                             <textarea id="warnings" name="warnings" class="form-control"></textarea>
                         </div>
+                        
+                        <h1>Recetas (opcional)</h1>
+                        <!-- Recetas -->
+                        <div class="mb-3" id="recipes">
+                            <div class="recipe">
+                                <label for="recipeno[]">Receta Nº</label>
+                                <input type="text" name="recipeno[]" required>
+
+                                <label for="provisionType[]">Botiquín o dispensación</label>
+                                <input type="text" name="provisionType[]" required></textarea>
+
+                                <label for="file_url[]">Adjuntar imagen:</label>
+                                <input type="file" name="file_url[]" accept=".pdf,.jpg,.jpeg,.png">
+                            </div>
+                        </div>
+
+                        <button type="normal" class="btn btn-primary" onclick="addRecipe()">Añadir otra receta</button>
 
                         <button type="submit" class="btn btn-primary">Crear</button>
                     </form>
+                    <script>
+                        function addRecipe() {
+                            let recipeDiv = document.createElement("div");
+                            recipeDiv.classList.add("recipe");
+
+                            recipeDiv.innerHTML = `
+                                <label for="recipeno[]">Receta Nº</label>
+                                <input type="text" name="recipeno[]" required>
+
+                                <label for="provisionType[]">Botiquín o dispensación</label>
+                                <input type="text" name="provisionType[]" required></textarea>
+
+                                <label for="file_url[]">Adjuntar imagen:</label>
+                                <input type="file" name="file_url[]" accept=".pdf,.jpg,.jpeg,.png">
+
+                                <button type="remove" onclick="removeRecipe(this)">Eliminar</button>
+                            `;
+
+                            document.getElementById("recipes").appendChild(recipeDiv);
+                        }
+
+                        function removeRecipe(button) {
+                            button.parentElement.remove();
+                        }
+                    </script>
                 </div>
             </div>
         </div>

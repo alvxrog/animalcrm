@@ -13,23 +13,23 @@ return new class extends Migration
     {
         Schema::table('records', function (Blueprint $table) {
             // Amnamnesis
-            $table->text('symptoms');           // Síntomas actuales
-            $table->text('history');            // Historial clinico
-            $table->text('medicine_history');   // Medicamentos que está tomando
-            $table->text('nourishmentm');       // Alimentación
+            $table->text('symptoms')->nullable();           // Síntomas actuales
+            $table->text('history')->nullable();            // Historial clinico
+            $table->text('medicine_history')->nullable();   // Medicamentos que está tomando
+            $table->text('nourishmentm')->nullable();       // Alimentación
 
-            $table->text('exam');               // Exámen clínico
+            $table->text('exam')->nullable();               // Exámen clínico
             // Campos de la receta
-            $table->text('dps');                // Dps 
-            $table->text('active_ingr');        // Principio activo
-            $table->text('quantity');           // Cantidad
-            $table->text('dose_freq');          // Dosis y frecuencia
-            $table->text('admin_chann');        // Vía de administración
-            $table->text('treat_duration');     // Duración tratamiento y % envase
+            $table->text('dps')->nullable();                // Dps 
+            $table->text('active_ingr')->nullable();        // Principio activo
+            $table->text('quantity')->nullable();           // Cantidad
+            $table->text('dose_freq')->nullable();         // Dosis y frecuencia
+            $table->text('admin_chann')->nullable();       // Vía de administración
+            $table->text('treat_duration')->nullable();     // Duración tratamiento y % envase
             $table->enum('prescr_type', ['ordinary', 'exceptional'])->default('ordinary');  // Tipo de prescripción
-            $table->text('indications');        // Indicaciones
+            $table->text('indications')->nullable();       // Indicaciones
             $table->enum('treatment', ['therapeutic', 'profilactic', 'metafilactic'])->default('therapeutic'); // Tratamiento
-            $table->text('warnings');           // Advertencias e instrucciones
+            $table->text('warnings')->nullable();          // Advertencias e instrucciones
         });
     }
 

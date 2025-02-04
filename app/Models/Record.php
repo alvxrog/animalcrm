@@ -34,6 +34,7 @@ class Record extends Model
     ];
 
     protected $casts = [
+        'date' => 'date',
         'prescr_type' => PrescriptionType::class,
         'treatment' => Treatment::class
     ];

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('client_id')->constrained()->onDelete('cascade');
             $table->foreignId('animal_id')->constrained()->onDelete('cascade');
-            $table->text('description'); // Información de la receta
+            $table->text('description')->nullable(); // Información de la receta
             $table->date('date');        // Fecha de la receta
             $table->timestamps();
         });

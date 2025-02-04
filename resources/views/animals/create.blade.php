@@ -17,7 +17,7 @@
                 <!-- Display Validation Errors -->
                 @if ($errors->any())
                     <div class="alert alert-danger">
-                        <strong>Whoops!</strong> There were some problems with your input.<br><br>
+                        <strong>Cuidado</strong> Ha habido algunos problemas al crear el elemento.<br><br>
                         <ul>
                             @foreach ($errors->all() as $error)
                                 <li>{{ $error }}</li>
