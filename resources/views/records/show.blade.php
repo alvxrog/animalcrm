@@ -33,6 +33,15 @@
                 <p><strong>Medicamentos que está tomando:</strong> {{ $record->medicine_history }}</p>
                 <p><strong>Alimentación:</strong> {{ $record->nourishmentm }}</p>
                 <p><strong>Examen clínico:</strong> {{ $record->exam }}</p>
+                <p><strong>Diagnóstico:</strong> {{ $record->diagnostic }}</p>
+                <div class="border p-4 mb-4">
+                    @if($record->analysis_url)
+                        <p><strong>Análisis:</strong></p>
+                        <iframe src="{{ asset('storage/' . $record->analysis_url) }}" width="100%" height="600px"></iframe>
+                    @else
+                        <p><strong>Análisis:</strong> No se adjuntó ninguna imagen</p>
+                    @endif
+                </div>
                 <p><strong>Dps:</strong> {{ $record->dps }}</p>
                 <p><strong>Principio(s) activo(s):</strong> {{ $record->active_ingr }}</p>
                 <p><strong>Cantidad prescrita:</strong> {{ $record->quantity }}</p>

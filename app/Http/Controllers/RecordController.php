@@ -49,6 +49,8 @@ class RecordController extends Controller
             'medicine_history'=> 'nullable|string',
             'nourishmentm'=> 'nullable|string',
             'exam'=> 'nullable|string',
+            'diagnostic' => 'nullable|string',
+            'analysis_url' => 'nullable|mimes:pdf|max:4096',
             'dps'=> 'nullable|string',
             'active_ingr'=> 'nullable|string',
             'quantity'=> 'nullable|string',
@@ -65,6 +67,13 @@ class RecordController extends Controller
             'provisionType.*' => 'nullable|string|max:255',
             'file_url.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:4096', // Máximo 4MB
         ]);
+
+        // Almacenar análisis si lo tenemos
+        if($request->hasFile("analysis_url")) {
+            $file = $request->file("analysis_url");
+            $fileUrl = $file->store('analysis', 'public');
+            $validated['analysis_url'] = $fileUrl;
+        }
 
         $recipeFields = ['recipeno', 'provisionType', 'file_url']; // Definir los nombres de los campos de Recipe
 
@@ -86,11 +95,14 @@ class RecordController extends Controller
                 $fileUrl = $file->store('recipes', 'public'); // Almacenar en storage/app/public/recipes
             }
 
-            $record->recipes()->create([
-                'recipeno' => $recipeno,
-                'provisionType' => $recipeData['provisionType'][$index],
-                'file_url' => $fileUrl,
-            ]);
+            if($recipeno != null and $recipeData['provisionType'][$index] != null)
+            {
+                $record->recipes()->create([
+                    'recipeno' => $recipeno,
+                    'provisionType' => $recipeData['provisionType'][$index],
+                    'file_url' => $fileUrl,
+                ]);
+            }
         }
 
         return redirect()->route('records.index')->with('success', 'Acto clínico generado correctamente');

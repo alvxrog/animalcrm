@@ -12,10 +12,10 @@
                     <!-- Datos del cliente -->
                     <div class="w-1/2">
                         <p><strong>Nombre:</strong> {{ $client->name }}</p>
-                        <p><strong>Número de teléfono:</strong> {{ $client->phoneno }}</p>
-                        <p><strong>Correo electrónico:</strong> {{ $client->email }}</p>
+                        <p><strong>Teléfono:</strong> {{ $client->phoneno }}</p>
                         <p><strong>Número de identificación (DNI/NIE):</strong> {{ $client->identifno }}</p>
                         <p><strong>Dirección:</strong> {{ $client->address }}</p>
+                        <p><strong>Correo electrónico:</strong> {{ $client->email }}</p>
                         <a href="{{ route('clients.edit', $client->id) }}" 
                         class="inline-block px-4 py-2 bg-yellow-500 text-white text-sm font-medium rounded shadow hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2 transition duration-200">
                             Editar
@@ -25,7 +25,7 @@
                             @method('DELETE')
                             <button type="submit" 
                                     class="px-4 py-2 bg-red-500 text-white text-sm font-medium rounded shadow hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-2 transition duration-200"
-                                    onclick="return confirm('Are you sure?')">
+                                    onclick="return confirm('Estas seguro de que deseas eliminar el cliente? Todos sus animales y actos clínicos se eliminaran también')">
                                 Eliminar
                             </button>
                         </form>

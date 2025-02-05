@@ -21,6 +21,8 @@ class Record extends Model
         'medicine_history',
         'nourishmentm',
         'exam',
+        'diagnostic',
+        'analysis_url',
         'dps',
         'active_ingr',
         'quantity',

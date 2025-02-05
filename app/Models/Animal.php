@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Animal extends Model
 {
@@ -38,5 +39,10 @@ class Animal extends Model
     public function records() : HasMany
     {
         return $this->hasMany(Record::class);
+    }
+
+    public function latestRecord() : HasOne
+    {
+        return $this->hasOne(Record::class)->latest();
     }
 }

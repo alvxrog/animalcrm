@@ -44,6 +44,14 @@
                             <label for="date" class="form-label">Fecha</label>
                             <input type="date" id="date" name="date" class="form-control">
                         </div>
+                        <script>
+                            // Obtener la fecha actual en formato YYYY-MM-DD
+                            document.addEventListener("DOMContentLoaded", function() {
+                                let today = new Date();
+                                let formattedDate = today.toISOString().split('T')[0]; // Extraer solo la parte de la fecha
+                                document.getElementById("date").value = formattedDate;
+                            });
+                        </script>
 
                         <div class="mb-3">
                             <label for="sypmtoms" class="form-label">Síntomas actuales</label>
@@ -52,23 +60,31 @@
 
                         <div class="mb-3">
                             <label for="history" class="form-label">Historial clínico</label>
-                            <textarea id="history" name="history" class="form-control"></textarea>
+                            <textarea id="history" name="history" class="form-control">{{ old('history', $animal->latestRecord->history ?? '') }}</textarea>
                         </div>
 
                         <div class="mb-3">
                             <label for="medicine_history" class="form-label">Medicamentos que está tomando</label>
-                            <textarea id="medicine_history" name="medicine_history" class="form-control"></textarea>
+                            <textarea id="medicine_history" name="medicine_history" class="form-control">{{ old('medicine_history', $animal->latestRecord->medicine_history ?? '') }}</textarea>
                         </div>
 
                         <div class="mb-3">
                             <label for="nourishmentm" class="form-label">Alimentación</label>
-                            <textarea id="nourishmentm" name="nourishmentm" class="form-control"></textarea>
+                            <textarea id="nourishmentm" name="nourishmentm" class="form-control">{{ old('nourishmentm', $animal->latestRecord->nourishmentm ?? '') }}</textarea>
                         </div>
 
                         <div class="mb-3">
                             <label for="exam" class="form-label">Examen clínico</label>
                             <textarea id="exam" name="exam" class="form-control"></textarea>
                         </div>
+
+                        <div class="mb-3">
+                            <label for="diagnostic" class="form-label">Diagnóstico</label>
+                            <textarea id="diagnostic" name="diagnostic" class="form-control"></textarea>
+                        </div>
+
+                        <label for="analysis_url">Adjuntar análisis:</label>
+                        <input type="file" name="analysis_url" accept=".pdf,.jpg,.jpeg,.png">
 
                         <div class="mb-3">
                             <label for="dps" class="form-label">Dps (denominación del medicamento, concentración y forma farmacéutica)</label>
@@ -133,21 +149,47 @@
                         </div>
                         
                         <h1>Recetas (opcional)</h1>
-                        <!-- Recetas -->
-                        <div class="mb-3" id="recipes">
+                        <!-- Selector para elegir con o sin recetas -->
+                        <div class="mb-3">
+                            <label for="recipeSelection">Seleccionar tipo:</label>
+                            <select id="recipeSelection" class="form-control" onchange="toggleRecipes()">
+                                <option value="sin_recetas">Sin recetas</option>
+                                <option value="con_recetas">Con recetas</option>
+                            </select>
+                        </div>
+
+                        <!-- Recetas (inicialmente oculto) -->
+                        <div class="mb-3" id="recipes" style="display: none;">
                             <div class="recipe">
                                 <label for="recipeno[]">Receta Nº</label>
-                                <input type="text" name="recipeno[]" required>
+                                <input type="text" name="recipeno[]">
 
                                 <label for="provisionType[]">Botiquín o dispensación</label>
-                                <input type="text" name="provisionType[]" required></textarea>
+                                <input type="text" name="provisionType[]">
 
                                 <label for="file_url[]">Adjuntar imagen:</label>
-                                <input type="file" name="file_url[]" accept=".pdf,.jpg,.jpeg,.png">
+                                <input type="file" name="file_url[]" accept=".jpg,.jpeg,.png">
                             </div>
                         </div>
 
-                        <button type="normal" class="btn btn-primary" onclick="addRecipe()">Añadir otra receta</button>
+                        <!-- Botón para añadir más recetas -->
+                        <button type="button" class="btn btn-primary" onclick="addRecipe()" id="addRecipeBtn" style="display: none;">Añadir otra receta</button>
+
+                        <script>
+                            function toggleRecipes() {
+                                var select = document.getElementById("recipeSelection");
+                                var recipesDiv = document.getElementById("recipes");
+                                var addRecipeBtn = document.getElementById("addRecipeBtn");
+
+                                if (select.value === "con_recetas") {
+                                    recipesDiv.style.display = "block";
+                                    addRecipeBtn.style.display = "block";
+                                } else {
+                                    recipesDiv.style.display = "none";
+                                    addRecipeBtn.style.display = "none";
+                                }
+                            }
+                        </script>
 
                         <button type="submit" class="btn btn-primary">Crear</button>
                     </form>
@@ -164,7 +206,7 @@
                                 <input type="text" name="provisionType[]" required></textarea>
 
                                 <label for="file_url[]">Adjuntar imagen:</label>
-                                <input type="file" name="file_url[]" accept=".pdf,.jpg,.jpeg,.png">
+                                <input type="file" name="file_url[]" accept=".jpg,.jpeg,.png">
 
                                 <button type="remove" onclick="removeRecipe(this)">Eliminar</button>
                             `;
