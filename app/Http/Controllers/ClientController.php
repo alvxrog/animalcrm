@@ -14,7 +14,7 @@ class ClientController extends Controller
     public function index()
     {
         return view('clients.index', [
-            'clients' => Auth::user()->clients()->latest()->paginate(20),
+            'clients' => Client::where('user_id', Auth::id())->latest()->paginate(20),
         ]);
     }
 
@@ -38,6 +38,8 @@ class ClientController extends Controller
             'address' => 'required|string|max:255',
             'phoneno' => 'required|string|max:12',
         ]);
+
+        $validated['user_id'] = Auth::id();
 
         Client::create($validated);
 

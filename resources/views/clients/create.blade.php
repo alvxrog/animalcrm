@@ -11,6 +11,7 @@
                 <div class="p-6 text-gray-900">
                     <form action="{{ route('clients.store') }}" method="POST">
                         @csrf
+
                         <div class="mb-3">
                             <label for="name" class="form-label">Nombre</label>
                             <input type="text" name="name" id="name" class="form-control" value="{{ old('name') }}">
