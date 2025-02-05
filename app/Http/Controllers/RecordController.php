@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use App\Models\Client;
 use App\Models\Animal;
 use App\Models\Record;
@@ -13,8 +15,14 @@ class RecordController extends Controller
     //
     public function index() : View
     {
+        $user = Auth::user();
+
+        $records = Record::whereHas('client', function ($query) use ($user) {
+            $query->where('user_id', $user->id);
+        })->latest()->paginate(20);
+
         return view('records.index', [
-            'records' => Record::latest()->paginate(20),
+            'records' => $records,
         ]);
     }
 
