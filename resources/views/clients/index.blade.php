@@ -20,6 +20,14 @@
                         <div class="alert alert-success">{{ session('success') }}</div>
                     @endif
 
+                    <form method="GET" action="{{ route('clients.index') }}" class="mb-4">
+                        <input type="text" name="search" value="{{ request('search') }}" placeholder="Buscar por nombre o teléfono" class="p-2 border rounded">
+                        <button type="submit" class="p-2 bg-blue-500 text-white rounded">Buscar</button>
+
+                        @if(request('search'))
+                            <a href="{{ route('clients.index') }}" class="p-2 bg-red-500 text-white rounded">Reiniciar</a>
+                        @endif
+                    </form>
                     <table class="min-w-full border-collapse">
                         <thead class='bg-white text-gray-700'>
                             <tr>
@@ -61,7 +69,7 @@
                         </tbody>
                     </table>
 
-                    {{ $clients->links() }}
+                    {{ $clients->appends(['search' => request('search')])->links() }}
                 </div>
             </div>
         </div>

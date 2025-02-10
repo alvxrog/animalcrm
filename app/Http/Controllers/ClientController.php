@@ -11,11 +11,21 @@ class ClientController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('clients.index', [
-            'clients' => Client::where('user_id', Auth::id())->latest()->paginate(20),
-        ]);
+        $search = $request->input('search');
+
+        $clients = Client::where('user_id', Auth::id())
+            ->where(function ($query) use ($search) {
+                if(!empty($search)) {
+                    $query->where('name', 'LIKE', "%{$search}%")
+                          ->orWhere('phoneno', 'LIKE', "%{$search}%");
+                }
+            })
+            ->latest()
+            ->paginate(20);
+    
+        return view('clients.index', compact('clients', 'search'));
     }
 
     /**
