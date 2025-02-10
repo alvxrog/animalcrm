@@ -12,18 +12,24 @@
                 <!-- Detalles del Cliente -->
                 <h1 class="text-2xl font-bold mb-4">Detalles del Cliente</h1>
                 <p><strong>Nombre:</strong> {{ $record->animal->client->name }}</p>
+                <p><strong>DNI/NIE:</strong> {{ $record->animal->client->identifno }}</p>
                 <p><strong>Email:</strong> {{ $record->animal->client->email }}</p>
+                <p><strong>Teléfono:</strong> {{ $record->animal->client->phoneno }}</p>
 
                 <!-- Detalles del Animal -->
                 <h1 class="text-2xl font-bold mt-6 mb-4">Detalles del Animal</h1>
                 <p><strong>Nombre:</strong> {{ $record->animal->name }}</p>
                 <p><strong>Nº Microchip:</strong> {{ $record->animal->microchipno }}</p>
+                <p><strong>Especie:</strong> {{ $record->animal->type }}</p>
                 <p><strong>Sexo:</strong> {{ $record->animal->sex }}</p>
                 <p>
                     <strong>Fecha de Nacimiento:</strong> 
                     {{ $record->animal->dob ? $record->animal->dob->format('d-m-Y') : 'No asignada' }}
                 </p>
                 <p><strong>Raza:</strong> {{ $record->animal->breed }}</p>
+                <p><strong>Raza (segunda):</strong> {{ $record->animal->breed_sec }}</p>
+                <p><strong>Capa:</strong> {{ $record->animal->layer }}</p>
+                <p><strong>Propósito:</strong> {{ $record->animal->layer }}</p>
 
                 <!-- Detalles del Acto Clínico -->
                 <h1 class="text-2xl font-bold mt-6 mb-4">Detalles del Acto Clínico</h1>

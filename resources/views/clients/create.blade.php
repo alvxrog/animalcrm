@@ -25,7 +25,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="identifno" class="form-label">Nº de identificación (DNI/NIF/NIE)*</label>
+                            <label for="identifno" class="form-label">DNI/NIF/NIE*</label>
                             <input type="text" name="identifno" id="identifno" class="form-control" value="{{ old('identifno') }}">
                             @error('identifno') <div class="text-danger">{{ $message }}</div> @enderror
                         </div>

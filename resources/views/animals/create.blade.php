@@ -11,8 +11,9 @@
                 <div class="p-6 text-gray-900">
                 <h1>Detalles del cliente</h1>
                 <p><strong>Nombre:</strong> {{ $client->name }}</p>
-                <p><strong>Nº identificacion (DNI/NIE):</strong> {{ $client->identifno }}</p>
-                <p><strong>Correo electrónico:</strong> {{ $client->email }}</p>
+                <p><strong>DNI/NIE:</strong> {{ $client->identifno }}</p>
+                <p><strong>Email:</strong> {{ $client->email }}</p>
+                <p><strong>Teléfono:</strong> {{ $client->phoneno }}</p>
 
                 <!-- Display Validation Errors -->
                 @if ($errors->any())
@@ -93,7 +94,7 @@
                     <div class="form-group">
                         <label for="breed">Raza*:</label>
                         <input type="text" name="breed" id="breed" class="form-control" 
-                            value="{{ old('breed', isset($animal) ? $animal->breed : '') }}">
+                            value="{{ old('breed', isset($animal) ? $animal->breed : '') }}" required>
                     </div>
 
                     <!-- Breed sec -->
@@ -114,7 +115,7 @@
                     <div class="form-group">
                         <label for="purpose">Propósito*:</label>
                         <input type="text" name="purpose" id="purpose" class="form-control" 
-                            value="{{ old('purpose', isset($animal) ? $animal->purpose : '') }}">
+                            value="{{ old('purpose', isset($animal) ? $animal->purpose : '') }}" required>
                     </div>
 
                     <!-- Submit Button -->

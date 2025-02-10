@@ -11,14 +11,20 @@
                 <div class="p-6 text-gray-900">
                     <h1>Detalles del cliente</h1>
                     <p><strong>Nombre:</strong> {{ $animal->client->name }}</p>
+                    <p><strong>DNI/NIE:</strong> {{ $animal->client->identifno }}</p>
                     <p><strong>Email:</strong> {{ $animal->client->email }}</p>
+                    <p><strong>Teléfono:</strong> {{ $animal->client->phoneno }}</p>
 
                     <h1>Detalles del animal</h1>
                     <p><strong>Nombre:</strong> {{ $animal->name }}</p>
                     <p><strong>Nº Microchip:</strong> {{ $animal->microchipno }}</p>
+                    <p><strong>Especie:</strong> {{ $animal->type }}</p>
                     <p><strong>Sexo:</strong> {{ $animal->sex }}</p>
                     <p><strong>Fecha de nacimiento:</strong> {{ $animal->dob->format('d-m-Y')}}</p>
                     <p><strong>Raza:</strong> {{ $animal->breed }}</p>
+                    <p><strong>Raza (segunda):</strong> {{ $animal->breed_sec }}</p>
+                    <p><strong>Capa:</strong> {{ $animal->layer }}</p>
+                    <p><strong>Propósito:</strong> {{ $animal->layer }}</p>
 
                     @if ($errors->any())
                     <div class="alert alert-danger">
