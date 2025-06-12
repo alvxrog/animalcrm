@@ -13,7 +13,8 @@
                     <table class="min-w-full border-collapse">
                         <thead class='bg-white text-gray-700'>
                             <tr>
-                                <th class='px-4 py-2 text-left font-medium'>Fecha</th>
+                                <th class='px-4 py-2 text-left font-medium'>Fecha de creación</th>
+                                <th class='px-4 py-2 text-left font-medium'>Fecha del acto</th>
                                 <th class='px-4 py-2 text-left font-medium'>Nombre de cliente</th>
                                 <th class='px-4 py-2 text-left font-medium'>Nombre de animal</th>
                                 <th class='px-4 py-2 text-left font-medium'>Nº Microchip</th>
@@ -25,6 +26,7 @@
                             @foreach($records as $record)
                                 <tr class="hover:bg-gray-100">
                                     <td class="px-4 py-2">{{ $record->created_at->format('d-m-Y') }}</td>
+                                    <td class="px-4 py-2">{{ $record->date->format('d-m-Y') }}</td>
                                     <td class="px-4 py-2">{{ $record->client->name }}</td>
                                     <td class="px-4 py-2">{{ $record->animal->name }}</td>
                                     <td class="px-4 py-2">{{ $record->animal->microchipno }}</td>

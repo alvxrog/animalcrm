@@ -6,7 +6,7 @@
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-full mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 flex">    
                     <!-- Datos del cliente -->
@@ -58,6 +58,12 @@
                                                 <a href="{{ route('records.create_from_animal', $animal) }}"
                                                 class="inline-block px-4 py-2 bg-blue-500 text-white text-sm font-medium rounded shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 transition duration-200">
                                                 Nuevo acto clínico</a>
+                                                <a href="{{ route('animals.show', $animal) }}"
+                                                class="inline-block px-4 py-2 bg-green-500 text-white text-sm font-medium rounded shadow hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2 transition duration-200">
+                                                Ver</a>
+                                                <a href="{{ route('animals.edit', $animal) }}"
+                                                class="inline-block px-4 py-2 bg-yellow-500 text-white text-sm font-medium rounded shadow hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2 transition duration-200">
+                                                Editar</a>
                                                 <form action="{{ route('animals.destroy', $animal->id) }}" method="POST" style="display:inline;">
                                                     @csrf
                                                     @method('DELETE')

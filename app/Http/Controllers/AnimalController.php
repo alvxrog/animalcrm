@@ -61,7 +61,7 @@ class AnimalController extends Controller
      */
     public function show(Animal $animal)
     {
-        //
+        return view('animals.show', compact('animal'));
     }
 
     /**
@@ -69,7 +69,7 @@ class AnimalController extends Controller
      */
     public function edit(Animal $animal)
     {
-        //
+        return view('animals.edit', compact('animal'));
     }
 
     /**
@@ -77,7 +77,24 @@ class AnimalController extends Controller
      */
     public function update(Request $request, Animal $animal)
     {
-        //
+        $validated = $request->validate([
+        'name' => 'required|string|max:255',
+        'type' => 'required|string',
+        'sex' => 'required|in:Male,Female',
+        'dob' => 'required|date',
+        'breed' => 'nullable|string|max:255',
+        'breed_sec' => 'nullable|string|max:255',
+        'layer' => 'nullable|string|max:255',
+        'purpose' => 'nullable|string|max:255',
+        'client_id' => 'required|exists:clients,id',
+        'user_id' => 'required|exists:users,id',
+        'microchipno' => 'required|string|max:255',
+        ]);
+        
+        $animal->update($validated);
+
+        return redirect()->route('animals.show', $animal)
+                         ->with('success', 'Animal actualizado correctamente');
     }
 
     /**
